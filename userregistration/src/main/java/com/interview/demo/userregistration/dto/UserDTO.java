@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 public class UserDTO {
 
     private final String SPECIAL_CHARACTERS = "_#$%";
-    private final String PASSWORD_MIN_SIZE = "8";
+    private final int PASSWORD_MIN_SIZE = 8;
     private final String PASSWORD_REGEX_PATTERN = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?["
             +SPECIAL_CHARACTERS+"]).{" +
             PASSWORD_MIN_SIZE+ ",}$";
@@ -24,6 +24,8 @@ public class UserDTO {
     @NotBlank(message="UserName cannot be blank")
     private String userName;
     @NotBlank(message="Password cannot be blank")
+    @Size(min = PASSWORD_MIN_SIZE, message = "Password must be at least "+PASSWORD_MIN_SIZE +
+            " characters")
     @Pattern(regexp   = PASSWORD_REGEX_PATTERN, message = "Password should contain at least one uppercase, one lowercase, one digit and one special character")
     private String password;
     @NotBlank(message="IpAddress cannot be blank")
@@ -33,7 +35,6 @@ public class UserDTO {
     private String country;
     private String countryCode;
     private String regionName;
-
     private String city;
 
 

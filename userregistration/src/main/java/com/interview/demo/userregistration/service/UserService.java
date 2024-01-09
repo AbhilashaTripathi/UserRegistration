@@ -3,6 +3,7 @@ package com.interview.demo.userregistration.service;
 import com.interview.demo.userregistration.dto.UserDTO;
 import com.interview.demo.userregistration.entity.IpResponse;
 import com.interview.demo.userregistration.entity.User;
+import com.interview.demo.userregistration.exception.ResourceNotFoundException;
 import com.interview.demo.userregistration.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -51,10 +52,17 @@ public class UserService {
         BeanUtils.copyProperties(user, userDTO);
         return userDTO;
     }
-    public User getUser(String userName){
-        return userRepository.findByUserName(userName);
+    public UserDTO getUser(String userName){
+        User user = userRepository.findByUserName(userName).orElseThrow(()->
+                new ResourceNotFoundException("User", "userName", userName));
+        UserDTO userDTO = new UserDTO();
+        mapToDto(user, userDTO);
+        return userDTO;
     }
 
+    private void mapToDto(User user, UserDTO userDTO) {
+        BeanUtils.copyProperties(user, userDTO);
+    }
 
     public boolean isPasswordValid(String password) {
 
