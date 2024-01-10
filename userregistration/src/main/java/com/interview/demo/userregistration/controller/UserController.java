@@ -22,15 +22,13 @@ public class UserController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<String> registerUser(@RequestBody @Valid UserDTO userDTO) {
-        try {
+
             userService.registerUser(userDTO);
             String welcomeMessage = "Welcome " + userDTO.getUserName() +
                     " id " + userDTO.getId() +
                     " from city "+ userDTO.getCity();
             return new ResponseEntity<>(welcomeMessage, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+
 
     }
 

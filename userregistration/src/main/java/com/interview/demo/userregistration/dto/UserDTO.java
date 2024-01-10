@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +33,7 @@ public class UserDTO {
     @NotBlank(message="IpAddress cannot be blank")
     private String ipAddress; // Need to extract from header instaed of getting form user
 
-    private Long id;
+    private UUID id;
     private String country;
     private String countryCode;
     private String regionName;
