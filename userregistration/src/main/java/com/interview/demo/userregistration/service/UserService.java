@@ -4,7 +4,7 @@ import com.interview.demo.userregistration.dto.UserDTO;
 import com.interview.demo.userregistration.entity.User;
 import com.interview.demo.userregistration.exception.ResourceNotFoundException;
 import com.interview.demo.userregistration.repository.UserRepository;
-import com.interview.demo.userregistration.response;
+import com.interview.demo.userregistration.response.IpResponse;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserDTO registerUser(UserDTO userDTO) throws Exception {
-        ResponseEntity<response.IpResponse> ipResponseResponseEntity = restTemplate.getForEntity(
-                IP_API + userDTO.getIpAddress(), response.IpResponse.class);
+        ResponseEntity<IpResponse> ipResponseResponseEntity = restTemplate.getForEntity(
+                IP_API + userDTO.getIpAddress(), IpResponse.class);
         if(ipResponseResponseEntity.getStatusCode().is2xxSuccessful()){
-            response.IpResponse ipResponse = ipResponseResponseEntity.getBody();
+            IpResponse ipResponse = ipResponseResponseEntity.getBody();
             if(ipResponse.getCountryCode() != null &&
                     !COUNTRY_CODE_CANADA.equalsIgnoreCase(ipResponse.getCountryCode())) {
                 throw new Exception("User is not eligible to register. ");
